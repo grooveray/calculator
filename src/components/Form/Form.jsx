@@ -3,6 +3,7 @@ import { createReport } from "../../api/reports";
 import { ResultContext } from "../../context/ResultContext";
 import Input from "../Input/Input";
 import Select from "../Select/Select";
+import styles from "./Form.module.css";
 
 const initialState = {
   company: "",
@@ -46,7 +47,7 @@ export default function Form({ setShowResult }) {
     setShowResult(true);
   };
   return (
-    <form onSubmit={onSubmit}>
+    <form className={styles.form} onSubmit={onSubmit}>
       <Select onSelect={onSelect} />
       {labels.map((label) => (
         <Input
@@ -56,7 +57,7 @@ export default function Form({ setShowResult }) {
           inputs={inputs}
         />
       ))}
-      <button>계산하기</button>
+      <button className={styles.button}>계산하기</button>
     </form>
   );
 }

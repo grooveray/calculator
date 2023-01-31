@@ -1,4 +1,5 @@
 import React from "react";
+import styles from "./Input.module.css";
 
 export default function Input({ label, onChange, inputs }) {
   const { id, text, name } = label;
@@ -19,12 +20,13 @@ export default function Input({ label, onChange, inputs }) {
     }
   }
   return (
-    <div>
-      <label htmlFor={id}>
+    <div className={styles.list}>
+      <label className={styles.label} htmlFor={id}>
         {text}
-        <span>{getSpanText(name)}</span>
+        <span className={styles.unit}>{getSpanText(name)}</span>
       </label>
       <input
+        className={styles.input}
         type="number"
         id={id}
         name={name}

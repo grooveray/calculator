@@ -1,0 +1,17 @@
+.list {
+  width: 70%;
+  margin: 0.6rem 0;
+  display: flex;
+  justify-content: space-between;
+}
+.list:nth-child(2) {
+  margin-top: 1rem;
+}
+.unit {
+  font-size: 0.8rem;
+  vertical-align: baseline;
+}
+.input {
+  font-size: 1rem;
+  min-width: 220px;
+}

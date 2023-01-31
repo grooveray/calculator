@@ -1,25 +1,34 @@
 import React from "react";
+import styles from "./Select.module.css";
+
+const companyLists = [
+  "수원",
+  "양주",
+  "안양",
+  "미래부",
+  "서부",
+  "천하제일",
+  "사조",
+  "카길",
+  "퓨리나",
+  "중앙",
+  "우성",
+  "무지개",
+  "기타",
+];
 
 export default function Select({ onSelect }) {
   return (
-    <div>
-      <select name="company" onChange={onSelect}>
-        <option defaultValue="" hidden>
+    <div className={styles.container}>
+      <select className={styles.select} name="company" onChange={onSelect}>
+        <option className={styles.option} defaultValue="" hidden>
           사료회사명을 선택해주세요
         </option>
-        <option value="수원">수원</option>
-        <option value="양주">양주</option>
-        <option value="안양">안양</option>
-        <option value="미래부">미래부</option>
-        <option value="서부">서부</option>
-        <option value="천하제일">천하제일</option>
-        <option value="사조">사조</option>
-        <option value="카길">카길</option>
-        <option value="퓨리나">퓨리나</option>
-        <option value="중앙">중앙</option>
-        <option value="우성">우성</option>
-        <option value="무지개">무지개</option>
-        <option value="기타">기타</option>
+        {companyLists.map((list, index) => (
+          <option className={styles.option} key={index} value={list}>
+            {list}
+          </option>
+        ))}
       </select>
     </div>
   );

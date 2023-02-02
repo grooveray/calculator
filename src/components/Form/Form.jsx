@@ -32,8 +32,7 @@ export default function Form({ setShowResult }) {
     const { value } = e.target;
     setInputs({ ...inputs, company: value });
   };
-  const onSubmit = async (e) => {
-    e.preventDefault();
+  const onSubmit = async () => {
     if (!inputs) return alert("모든 칸은 필수 입력사항입니다.");
     for (let i = 0; i < labels.length; i++) {
       if (!inputs[labels[i].name])

@@ -7,16 +7,28 @@
   padding: 1.2rem 0;
   background-color: var(--color-bg);
 }
+.inputBundle {
+  width: 70%;
+  margin: 0.6rem 0;
+  display: flex;
+  justify-content: space-between;
+}
+.label {
+  font-size: 1.2rem;
+}
+.input {
+  font-size: 1rem;
+}
 .button {
-  font-size: 1.4rem;
+  margin: 0.5rem 0;
+  font-size: 1.2rem;
   font-weight: bold;
+  padding: 0.2rem 0.5rem;
   background-color: var(--color-accent);
   color: var(--color-white);
   border-radius: 0.3rem;
-  padding: 0.2rem 0.5rem;
   cursor: pointer;
-  margin-top: 1.5rem;
 }
 .button:hover {
-  filter: brightness(125%);
+  filter: brightness(110%);
 }

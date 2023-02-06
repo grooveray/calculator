@@ -1,0 +1,8 @@
+.container {
+  width: 60%;
+  font-size: 1rem;
+}
+.accent {
+  font-weight: bold;
+  color: var(--color-black);
+}

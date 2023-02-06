@@ -1,13 +1,17 @@
 import React from "react";
+import styles from "./LoginForm.module.css";
 
 export default function LoginForm({ inputs, onChange, onSubmit }) {
   const { email, password } = inputs;
   return (
-    <form onSubmit={onSubmit}>
-      <div>
-        <label htmlFor="email">이메일</label>
+    <form onSubmit={onSubmit} className={styles.form}>
+      <div className={styles.inputBundle}>
+        <label className={styles.label} htmlFor="email">
+          이메일
+        </label>
         <input
           id="email"
+          className={styles.input}
           name="email"
           type="email"
           onChange={onChange}
@@ -15,10 +19,13 @@ export default function LoginForm({ inputs, onChange, onSubmit }) {
           placeholder="이메일을 입력해주세요"
         />
       </div>
-      <div>
-        <label htmlFor="password">비밀번호</label>
+      <div className={styles.inputBundle}>
+        <label className={styles.label} htmlFor="password">
+          비밀번호
+        </label>
         <input
           id="password"
+          className={styles.input}
           name="password"
           type="password"
           onChange={onChange}
@@ -27,7 +34,7 @@ export default function LoginForm({ inputs, onChange, onSubmit }) {
         />
       </div>
       <div>
-        <button>로그인</button>
+        <button className={styles.button}>로그인</button>
       </div>
     </form>
   );

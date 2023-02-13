@@ -12,7 +12,7 @@ export default function Result() {
       .catch(() =>
         alert("시스템에 오류가 생겨서 총데이터 개수를 불러오지 못했습니다.")
       );
-  }, [dataLen]);
+  }, []);
   const { result } = useContext(ResultContext);
 
   return (

@@ -11,8 +11,9 @@ export const initialUserState = {
 
 export function UserProvider({ children }) {
   const [user, setUser] = useState(initialUserState);
+  const [token, setToken] = useState("");
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <UserContext.Provider value={{ user, setUser, token, setToken }}>
       {children}
     </UserContext.Provider>
   );

@@ -26,7 +26,7 @@ export default function EachReport({ result }) {
   );
 }
 
-function transValue(value, floatNumber) {
+export function transValue(value, floatNumber) {
   return parseFloat(value.toFixed(floatNumber)).toLocaleString("ko-KR");
 }
 // function transDate(dateString) {

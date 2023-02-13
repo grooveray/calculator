@@ -6,6 +6,7 @@ export function saveUserInfo(response) {
 }
 export function getUserInfo() {
   const userInfo = localStorage.getItem(USER_INFO);
+  if (!userInfo) return { token: "", name: "", email: "", admin: "" };
   return JSON.parse(userInfo);
 }
 export function clearUserInfo() {

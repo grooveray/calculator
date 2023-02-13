@@ -1,9 +1,10 @@
 import React from "react";
 import { BiLogOut } from "react-icons/bi";
 import { clearToken, getToken } from "../../api/token";
-import { clearUserInfo } from "../../api/userInfo";
+import { clearUserInfo, getUserInfo } from "../../api/userInfo";
 import { initialUserState, useUser } from "../../context/UserContext";
 import styles from "./Header.module.css";
+import { useLoading } from "../../context/loadingContext";
 
 export default function Header({
   mainLists,
@@ -12,22 +13,51 @@ export default function Header({
   setShowResult,
   onCalcPage,
   onLoginPage,
+  myReportsPage,
+  myFeedsPage,
+  myPage,
 }) {
+  const { initState } = useLoading();
   const { setUser } = useUser();
   const token = getToken();
+  const userInfo = getUserInfo();
   const onClick = (list) => {
     setMainList(list);
-    if (list === "계산기") {
-      setShowResult(false);
-      onCalcPage();
+    switch (list) {
+      case "계산기":
+        setShowResult(false);
+        onCalcPage();
+        break;
+      case "로그인":
+        onLoginPage();
+        break;
+      case "내성적보기":
+        myReportsPage();
+        break;
+      case "사료별효율":
+        myFeedsPage();
+        break;
+      case "내정보":
+        myPage();
+        break;
+      default:
+        setShowResult(false);
+        onCalcPage();
+        break;
     }
-    if (list === "로그인") onLoginPage();
+    // if (list === "계산기") {
+    //   setShowResult(false);
+    //   onCalcPage();
+    // }
+    // if (list === "로그인") onLoginPage();
   };
   const onLogout = () => {
     clearToken();
     clearUserInfo();
     setUser(initialUserState);
+    initState();
     onCalcPage();
+    window.location.reload();
   };
   const filterdList = (mainLists) => {
     if (token) {
@@ -52,6 +82,12 @@ export default function Header({
           </li>
         ))}
       </ul>
+      {userInfo.name && (
+        <div className={styles.name}>
+          <p>Hello,</p>
+          <p>{userInfo.name}</p>
+        </div>
+      )}
       <div>
         <button className={styles.logout} onClick={onLogout}>
           <BiLogOut />

@@ -1,6 +1,8 @@
 import axios from "axios";
 
-const base_URL = "https://ray-calculator.herokuapp.com";
+const base_URL = "http://localhost:8080";
+
+// const base_URL = "https://ray-calculator.herokuapp.com";
 
 export async function getAllReports() {
   try {
@@ -21,4 +23,11 @@ export async function createReport(report) {
     console.error(e);
   }
 }
-export function removeReport() {}
+export async function removeReport(id) {
+  try {
+    const response = await axios.delete(`${base_URL}/calculate/${id}`);
+    return response;
+  } catch (e) {
+    console.error(e);
+  }
+}

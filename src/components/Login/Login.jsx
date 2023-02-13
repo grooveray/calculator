@@ -1,16 +1,17 @@
 import React, { useState } from "react";
 import * as usersRepository from "../../api/users.js";
 import LoginForm from "../LoginForm/LoginForm";
-import { getToken } from "../../api/token";
+import { getToken, saveToken } from "../../api/token";
 import styles from "./Login.module.css";
 import Description from "../Description/Description";
 import LoginFooter from "../LoginFooter/LoginFooter";
 import { useLoading } from "../../context/loadingContext.jsx";
 import { useNavigate } from "react-router-dom";
+import { saveUserInfo } from "../../api/userInfo.js";
 
 const initialInputs = { email: "", password: "" };
 
-export default function Login() {
+export default function Login({ setMainList, setShowResult }) {
   const navigate = useNavigate();
   const [inputs, setInputs] = useState(initialInputs);
   const { loading, error, initState, loadingState, errorState } = useLoading();
@@ -38,6 +39,10 @@ export default function Login() {
           return alert("유저정보가 올바르지 않습니다.");
         }
         // window.location.reload();
+        saveUserInfo(response);
+        saveToken(response.data.token);
+        setShowResult(false);
+        setMainList("계산기");
         navigate("/");
       }) //
       .catch((e) => {

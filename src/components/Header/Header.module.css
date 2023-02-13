@@ -37,6 +37,11 @@
 .fontDown {
   font-size: 1rem;
 }
+.name {
+  width: 3rem;
+  background-color: transparent;
+  font-size: 0.8rem;
+}
 .logout {
   font-size: 1.4rem;
   margin: 0.3rem;

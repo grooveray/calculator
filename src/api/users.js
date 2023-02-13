@@ -2,8 +2,11 @@ import axios from "axios";
 import { clearToken, getToken, saveToken } from "./token";
 import { clearUserInfo, saveUserInfo } from "./userInfo";
 
-const base_URL = "http://localhost:8080";
-const client_URL = "http://localhost:3000";
+// const base_URL = "http://localhost:8080";
+// const client_URL = "http://localhost:3000";
+
+const base_URL = "https://ray-calculator.herokuapp.com";
+const client_URL = "https://suwon-minhong.netlify.app";
 
 export async function getAllUsers() {
   try {

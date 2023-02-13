@@ -1,8 +1,8 @@
 import axios from "axios";
 
-const base_URL = "http://localhost:8080";
+// const base_URL = "http://localhost:8080";
 
-// const base_URL = "https://ray-calculator.herokuapp.com";
+const base_URL = "https://ray-calculator.herokuapp.com";
 
 export async function getAllReports() {
   try {

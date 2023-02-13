@@ -22,7 +22,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   accent-color: var(--color-accent);
   background: rgb(168, 104, 161);
   background: linear-gradient(

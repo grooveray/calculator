@@ -38,13 +38,12 @@
   font-size: 0.9rem;
 }
 .name {
-  width: 3rem;
+  width: 2rem;
   background-color: transparent;
-  font-size: 0.8rem;
+  font-size: 0.5rem;
 }
 .logout {
   font-size: 1.4rem;
-  margin: 0.3rem;
   background-color: transparent;
   color: var(--color-text);
   opacity: 0.8;

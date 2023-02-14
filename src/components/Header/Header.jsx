@@ -100,7 +100,7 @@ export default function Header({
           <p>{userInfo.name}</p>
         </div>
       )}
-      <div>
+      <div className={styles.btnDiv}>
         <button className={styles.logout} onClick={onLogout}>
           <BiLogOut />
         </button>

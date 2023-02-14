@@ -7,11 +7,13 @@
   background-color: var(--color-bg-dark);
   border-bottom: 1px solid var(--color-grey);
 }
-
 .lists {
   width: 100%;
   display: flex;
   justify-content: space-around;
+}
+.btnDiv {
+  margin: 0 -0.5rem;
 }
 .button {
   font-size: 1rem;
@@ -38,6 +40,7 @@
   font-size: 0.9rem;
 }
 .name {
+  margin-left: -1rem;
   width: 2rem;
   background-color: transparent;
   font-size: 0.5rem;

@@ -1,8 +1,13 @@
 .lists {
   width: 90%;
   margin-top: -0.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 .list {
+  width: 100%;
   display: flex;
   justify-content: space-around;
   margin-bottom: 0.5rem;
@@ -17,7 +22,7 @@
   border-bottom-left-radius: 5px;
 }
 .subtitle {
-  flex: 1;
+  flex: 2;
   padding: 0.2rem 0 0.1rem 1.5rem;
   background-color: var(--color-grey);
   color: var(--color-black);

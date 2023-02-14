@@ -5,11 +5,12 @@ import EachInfo from "../EachInfo/EachInfo.jsx";
 import styles from "./MyPage.module.css";
 import { GrUpdate } from "react-icons/gr";
 
-export default function MyPage() {
+export default function MyPage({ isUser, isSuperAdmin }) {
   const [user, setUser] = useState();
 
   useEffect(() => {
     async function getUsers() {
+      if (isUser) return setUser(isUser);
       try {
         const userInfo = getUserInfo();
         const reponse = await userAPI.getAllUsers();
@@ -22,7 +23,7 @@ export default function MyPage() {
       }
     }
     getUsers();
-  }, []);
+  }, [isUser]);
   if (!user) return <div className={styles.container}>로딩중입니다...</div>;
   return (
     <section className={styles.container}>
@@ -32,7 +33,7 @@ export default function MyPage() {
           (수정할 항목의 {<GrUpdate />}을 누르세요)
         </span>
       </div>
-      <EachInfo user={user} />
+      <EachInfo user={user} isSuperAdmin={isSuperAdmin} />
     </section>
   );
 }

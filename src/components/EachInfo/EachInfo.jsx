@@ -4,17 +4,23 @@ import { GrUpdate } from "react-icons/gr";
 import { AiFillLock } from "react-icons/ai";
 import { updateUser } from "../../api/users";
 
-export default function EachInfo({ user }) {
+export default function EachInfo({ user, isSuperAdmin }) {
   const [users, setUsers] = useState([]);
   useEffect(() => {
-    const { id, name, email, local, phone } = user;
-    setUsers([
+    const { id, name, email, local, phone, admin } = user;
+    const lists = [
       { text: "이름", value: name, name: "name", userId: id },
       { text: "지역", value: local, name: "local", userId: id },
       { text: "이메일", value: email, name: "email", userId: id },
       { text: "전화", value: phone, name: "phone", userId: id },
-    ]);
-  }, [user]);
+      { text: "관리자", value: admin, name: "admin", userId: id },
+    ];
+    if (isSuperAdmin) {
+      return setUsers(lists);
+    } else {
+      return setUsers(lists.filter((list) => list.value !== admin));
+    }
+  }, [user, isSuperAdmin]);
   const onClick = async (userId, name, value) => {
     const newValue = prompt(`수정할 ${name}을 입력해주세요.`, value);
     //validation
@@ -36,7 +42,6 @@ export default function EachInfo({ user }) {
     //validation
     const response = await updateUser(userId, "password", newValue, password);
     if (!response) return alert("기존의 비밀번호를 다시 한번 확인해주세요.");
-    console.log(response.data.updated);
     return alert("정보가 성공적으로 수정되었습니다.");
     //response.data.updated 가 유저정보임
   };

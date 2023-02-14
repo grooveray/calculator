@@ -2,6 +2,21 @@
   width: 80%;
   margin-top: 0.5rem;
 }
+.firstList {
+  margin-top: -1rem;
+  margin-bottom: 0.2rem;
+}
+.backBtn {
+  font-weight: bold;
+  background-color: var(--color-accent-light);
+  color: var(--color-text);
+  border-radius: 10px;
+  cursor: pointer;
+}
+.backBtn:hover {
+  background-color: var(--color-accent);
+  color: var(--color-white);
+}
 .list {
   display: flex;
   justify-content: space-around;

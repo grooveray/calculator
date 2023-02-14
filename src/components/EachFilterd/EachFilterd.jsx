@@ -5,6 +5,7 @@ import styles from "./EachFilterd.module.css";
 import { useLoading } from "../../context/loadingContext";
 import { RiDeleteBinLine } from "react-icons/ri";
 import * as reportsAPI from "../../api/reports.js";
+import * as usersAPI from "../../api/users.js";
 
 export default function EachFilterd({
   setReports,
@@ -21,6 +22,22 @@ export default function EachFilterd({
     initState();
     if (!(reports && userId)) {
       loadingState();
+    } else if (reports && userId === "1") {
+      let processing = reports;
+      getUsersFunction().then((data) => {
+        for (let i = 0; i < data.length; i++) {
+          const matchId = data[i].id;
+          const matchName = data[i].name;
+          processing = processing.map((p) =>
+            p.userId === matchId ? { ...p, name: matchName } : p
+          );
+        }
+        if (input) {
+          processing = processing.filter((fr) => fr.company === input);
+        }
+        setFilterd(processing);
+        initState();
+      });
     } else {
       let processing = reports.filter((report) => report.userId === userId);
       if (input && input !== "전부") {
@@ -56,8 +73,15 @@ export default function EachFilterd({
   return (
     <ul className={styles.lists}>
       <li className={`${styles.list} ${styles.maintitle}`}>
-        <span className={styles.title}>계산일</span>{" "}
-        <span className={styles.secondtitle}>입추수</span>{" "}
+        <span className={styles.title}>계산일</span>
+        {userId === "1" ? (
+          <>
+            <span className={styles.secondtitle}>사료</span>
+            <span className={styles.secondtitle}>이름</span>
+          </>
+        ) : (
+          <span className={styles.secondtitle}>입추수</span>
+        )}
         <span className={styles.subtitle}>효율</span>
         <span className={styles.deltitle}>삭제</span>
       </li>
@@ -67,9 +91,16 @@ export default function EachFilterd({
             <span className={styles.title}>
               {parseDatetoStr(filter.createdAt)}
             </span>
-            <span className={styles.secondtitle}>
-              {transValue(filter.inCount, 0)}수
-            </span>
+            {userId === "1" ? (
+              <>
+                <span className={styles.secondtitle}>{filter.company}</span>
+                <span className={styles.secondtitle}>{filter.name}</span>
+              </>
+            ) : (
+              <span className={styles.secondtitle}>
+                {transValue(filter.inCount, 0)}수
+              </span>
+            )}
             <span className={styles.subtitle}>
               {transValue(filter.feedEfficiency, 3)}
             </span>
@@ -99,4 +130,13 @@ function getYearFromDateStr(dateString) {
   const date = dateString.split("-");
   const year = date[0];
   return year;
+}
+
+async function getUsersFunction() {
+  try {
+    const response = await usersAPI.getAllUsers();
+    return response.data;
+  } catch (e) {
+    console.error(e);
+  }
 }

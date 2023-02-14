@@ -8,6 +8,8 @@ import Login from "./components/Login/Login";
 import MyFeeds from "./components/MyFeeds/MyFeeds";
 import MyPage from "./components/MyPage/MyPage";
 import MyReports from "./components/MyReports/MyReports";
+import OnDatas from "./components/OnDatas/OnDatas";
+import OnUsers from "./components/OnUsers/OnUsers";
 import Result from "./components/Result/Result";
 import Signup from "./components/Signup/Signup";
 
@@ -24,6 +26,8 @@ function App() {
   const myReportsPage = () => navigate("/myreports");
   const myFeedsPage = () => navigate("/myfeeds");
   const myPage = () => navigate("/mypage");
+  const onDatas = () => navigate("/ondatas");
+  const onUsers = () => navigate("/onusers");
 
   return (
     <>
@@ -37,6 +41,8 @@ function App() {
         myReportsPage={myReportsPage}
         myFeedsPage={myFeedsPage}
         myPage={myPage}
+        onDatas={onDatas}
+        onUsers={onUsers}
       />
       <Routes>
         <Route
@@ -55,6 +61,11 @@ function App() {
         <Route path="/myreports" element={<MyReports />} />
         <Route path="/myfeeds" element={<MyFeeds />} />
         <Route path="/mypage" element={<MyPage />} />
+        <Route path="/ondatas" element={<OnDatas />} />
+        <Route
+          path="/onusers"
+          element={<OnUsers setMainList={setMainList} />}
+        />
       </Routes>
       <Footer />
     </>

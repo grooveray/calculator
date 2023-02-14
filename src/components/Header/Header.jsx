@@ -16,6 +16,8 @@ export default function Header({
   myReportsPage,
   myFeedsPage,
   myPage,
+  onDatas,
+  onUsers,
 }) {
   const { initState } = useLoading();
   const { setUser } = useUser();
@@ -40,6 +42,12 @@ export default function Header({
       case "내정보":
         myPage();
         break;
+      case "데이터조회":
+        onDatas();
+        break;
+      case "유저정보":
+        onUsers();
+        break;
       default:
         setShowResult(false);
         onCalcPage();
@@ -61,7 +69,11 @@ export default function Header({
   };
   const filterdList = (mainLists) => {
     if (token) {
-      return mainLists.filter((list) => list !== "로그인");
+      if (getUserInfo().admin === "0") {
+        return mainLists.filter((list) => list !== "로그인");
+      } else {
+        return ["사료별효율", "데이터조회", "유저정보"];
+      }
     } else {
       return mainLists.filter((list) => list === "계산기" || list === "로그인");
     }

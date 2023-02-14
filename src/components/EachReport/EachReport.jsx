@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./EachReport.module.css";
 
-export default function EachReport({ result }) {
+export default function EachReport({ result, setShowEachReport }) {
   const results = [
     { title: "사육일수", value: transValue(result.day, 1) },
     { title: "입추수수", value: transValue(result.inCount, 0) },
@@ -16,6 +16,18 @@ export default function EachReport({ result }) {
 
   return (
     <ul className={styles.lists}>
+      {setShowEachReport && (
+        <li className={styles.firstList}>
+          <button
+            onClick={() => {
+              setShowEachReport(false);
+            }}
+            className={styles.backBtn}
+          >
+            뒤로가기
+          </button>
+        </li>
+      )}
       {results.map((result, index) => (
         <li className={styles.list} key={index}>
           <span className={styles.title}>{result.title}</span>

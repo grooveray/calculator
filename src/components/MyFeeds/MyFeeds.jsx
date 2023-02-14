@@ -25,7 +25,6 @@ export default function MyFeeds() {
     }
     getReports();
   }, []);
-  console.log(chart);
   return (
     <section className={styles.container}>
       <div className={styles.title}>사료업체별 효율변동추이</div>

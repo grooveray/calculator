@@ -14,8 +14,8 @@
   justify-content: space-around;
 }
 .button {
-  font-size: 1.4rem;
-  margin: 0.3rem;
+  font-size: 1rem;
+  margin: 0.1rem;
   background-color: transparent;
   color: var(--color-accent);
   opacity: 0.8;

@@ -59,6 +59,18 @@ export default function Form({ setShowResult }) {
         return alert(labels[i].text + "(은)는 필수 입력사항입니다.");
     }
     if (!inputs.company) return alert("사료회사명 선택은 필수사항입니다.");
+    if (
+      !(
+        inputs.feedAmount / inputs.totalWeight < 1 &&
+        inputs.feedAmount / inputs.totalWeight > 2
+      )
+    )
+      return alert(
+        `효율계산값: ${(inputs.feedAmount / inputs.totalWeight).toFixed(
+          3
+        )}은 나올수 없습니다. 입력값을 확인해주세요.`
+      );
+
     const created = { ...inputs, userId: await getUserId() };
     const response = await createReport(created);
     if (!response) return alert("Data not Found");

@@ -60,10 +60,8 @@ export default function Form({ setShowResult }) {
     }
     if (!inputs.company) return alert("사료회사명 선택은 필수사항입니다.");
     if (
-      !(
-        inputs.feedAmount / inputs.totalWeight < 1 &&
-        inputs.feedAmount / inputs.totalWeight > 2
-      )
+      inputs.feedAmount / inputs.totalWeight < 1 ||
+      inputs.feedAmount / inputs.totalWeight > 2
     )
       return alert(
         `효율계산값: ${(inputs.feedAmount / inputs.totalWeight).toFixed(

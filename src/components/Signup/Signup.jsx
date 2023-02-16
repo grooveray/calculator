@@ -50,6 +50,7 @@ export default function Signup() {
       .then((response) => {
         if (response.status === 409)
           return alert("해당 이메일정보를 가진 유저가 이미 존재합니다.");
+        alert("회원가입이 완료되었습니다. 로그인을 해주세요.");
         navigate("/Login");
       })
       .catch((e) => {

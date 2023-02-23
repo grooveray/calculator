@@ -14,6 +14,8 @@ export default function OnUsers({ setMainList }) {
   const [reports, setReports] = useState([]);
   const [user, setUser] = useState({});
   const [showEachUser, setShowEachUser] = useState(false);
+  const [showFilterReports, setShowFilterReports] = useState(false);
+  const [showEachReport, setShowEachReport] = useState(false);
   // const navigate = useNavigate();
   // const { result } = useResult();
 
@@ -33,8 +35,8 @@ export default function OnUsers({ setMainList }) {
   const onBackClick = () => setShowEachUser(false);
   const onDelClick = () => alert("유저삭제는 안 할 거지롱~");
   const onInitClick = () => {
-    window.location.reload();
-    setMainList("유저정보");
+    setShowFilterReports(false);
+    setShowEachReport(false);
   };
   return (
     <section className={styles.container}>
@@ -70,6 +72,10 @@ export default function OnUsers({ setMainList }) {
             users={users}
             onClick={onClick}
             onDelClick={onDelClick}
+            showFilterReports={showFilterReports}
+            setShowFilterReports={setShowFilterReports}
+            showEachReport={showEachReport}
+            setShowEachReport={setShowEachReport}
           />
         </>
       )}

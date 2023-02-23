@@ -6,11 +6,18 @@ import EachReport from "../EachReport/EachReport";
 import EachFilterd from "../EachFilterd/EachFilterd";
 import { useResult } from "../../context/ResultContext";
 
-export default function UsersList({ reports, users, onClick, onDelClick }) {
+export default function UsersList({
+  reports,
+  users,
+  onClick,
+  onDelClick,
+  showFilterReports,
+  setShowFilterReports,
+  showEachReport,
+  setShowEachReport,
+}) {
   const [adminReports, setAdminReports] = useState([]);
   const [adminUserId, setAdminUserId] = useState("");
-  const [showFilterReports, setShowFilterReports] = useState(false);
-  const [showEachReport, setShowEachReport] = useState(false);
   const { result } = useResult();
   const filterd = filterdArray(users, reports);
   const onDataClick = (userId, filterdData) => {

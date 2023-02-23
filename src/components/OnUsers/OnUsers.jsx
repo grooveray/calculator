@@ -6,7 +6,7 @@ import { AiFillBackward } from "react-icons/ai";
 import { TiArrowBack } from "react-icons/ti";
 import UsersList from "../UsersList/UsersList";
 import MyPage from "../MyPage/MyPage";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { getUserInfo } from "../../api/userInfo";
 
 export default function OnUsers({ setMainList }) {
@@ -14,7 +14,7 @@ export default function OnUsers({ setMainList }) {
   const [reports, setReports] = useState([]);
   const [user, setUser] = useState({});
   const [showEachUser, setShowEachUser] = useState(false);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   // const { result } = useResult();
 
   useEffect(() => {
@@ -35,7 +35,6 @@ export default function OnUsers({ setMainList }) {
   const onInitClick = () => {
     window.location.reload();
     setMainList("유저정보");
-    navigate("/onusers");
   };
   return (
     <section className={styles.container}>

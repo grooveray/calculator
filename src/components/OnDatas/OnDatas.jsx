@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import * as reportsAPI from "../../api/reports.js";
+import * as usersAPI from "../../api/users.js";
 import { useResult } from "../../context/ResultContext";
 import EachFilterd from "../EachFilterd/EachFilterd.jsx";
 import EachReport from "../EachReport/EachReport.jsx";
@@ -10,6 +11,7 @@ import { AiFillBackward, AiOutlineClear } from "react-icons/ai";
 
 export default function OnDatas() {
   const [reports, setReports] = useState([]);
+  const [users, setUsers] = useState([]);
   const [showEachReport, setShowEachReport] = useState(false);
   const { result } = useResult();
   const [input, setInput] = useState("");
@@ -19,7 +21,9 @@ export default function OnDatas() {
     async function getReports() {
       try {
         const response = await reportsAPI.getAllReports();
+        const response2 = await usersAPI.getAllUsers();
         setReports(response.data.data);
+        setUsers(response2.data);
       } catch (e) {
         console.error(e);
       }
@@ -67,6 +71,7 @@ export default function OnDatas() {
             userId="1"
             setShowEachReport={setShowEachReport}
             input={input}
+            users={users}
           />
         </>
       )}

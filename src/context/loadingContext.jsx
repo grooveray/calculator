@@ -24,7 +24,14 @@ export function LoadingProvider({ children }) {
 
   return (
     <LoadingContext.Provider
-      value={{ loading, error, initState, loadingState, errorState }}
+      value={{
+        loading,
+        error,
+        setLoading,
+        initState,
+        loadingState,
+        errorState,
+      }}
     >
       {children}
     </LoadingContext.Provider>

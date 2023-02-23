@@ -6,3 +6,9 @@
   font-weight: bold;
   color: var(--color-black);
 }
+
+@media screen and (max-width: 410px) {
+  .container {
+    width: 90%;
+  }
+}

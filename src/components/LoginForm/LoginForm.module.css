@@ -34,3 +34,19 @@
 .button:hover {
   filter: brightness(110%);
 }
+
+@media screen and (max-width: 410px) {
+  .inputBundle {
+    display: flex;
+    flex-direction: column;
+  }
+  .label {
+    display: flex;
+    font-size: 1rem;
+  }
+  .input {
+    display: flex;
+    font-size: 1rem;
+    width: 100%;
+  }
+}

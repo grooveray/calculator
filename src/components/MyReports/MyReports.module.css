@@ -1,5 +1,5 @@
 .container {
-  height: 90%;
+  height: 82%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -56,4 +56,16 @@
   transform: translateX(-5px);
   transition-duration: 500ms;
   color: var(--color-accent-light);
+}
+
+@media screen and (max-width: 410px) {
+  .title {
+    width: 95%;
+    font-size: 0.9rem;
+    display: flex;
+    flex-direction: column;
+  }
+  .bigtitle.select {
+    margin-top: 0.2rem;
+  }
 }

@@ -95,16 +95,18 @@ export default function Header({
         ))}
       </ul>
       {userInfo.name && (
-        <div className={styles.name}>
-          <p>Hello,</p>
-          <p>{userInfo.name}</p>
-        </div>
+        <>
+          <div className={styles.name}>
+            <p>Hello,</p>
+            <p>{userInfo.name}</p>
+          </div>
+          <div className={styles.btnDiv}>
+            <button className={styles.logout} onClick={onLogout}>
+              <BiLogOut />
+            </button>
+          </div>
+        </>
       )}
-      <div className={styles.btnDiv}>
-        <button className={styles.logout} onClick={onLogout}>
-          <BiLogOut />
-        </button>
-      </div>
     </header>
   );
 }

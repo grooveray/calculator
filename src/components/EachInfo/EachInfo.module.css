@@ -40,3 +40,25 @@
 .button:hover {
   transform: rotate(90deg) scale(110%);
 }
+
+@media screen and (max-width: 410px) {
+  .lists {
+    width: 95%;
+    font-size: 0.9rem;
+  }
+  .list {
+    display: flex;
+    flex-wrap: wrap;
+    height: auto;
+  }
+  .title {
+    display: flex;
+    flex: 1 0 90%;
+  }
+  .subtitle {
+    flex: 4 0 4rem;
+  }
+  .button {
+    flex: 1 0 2rem;
+  }
+}

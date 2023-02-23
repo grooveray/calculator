@@ -5,7 +5,6 @@ import styles from "./EachFilterd.module.css";
 import { useLoading } from "../../context/loadingContext";
 import { RiDeleteBinLine } from "react-icons/ri";
 import * as reportsAPI from "../../api/reports.js";
-import * as usersAPI from "../../api/users.js";
 
 export default function EachFilterd({
   setReports,
@@ -13,42 +12,56 @@ export default function EachFilterd({
   userId,
   setShowEachReport,
   input,
+  users,
 }) {
   const [filterd, setFilterd] = useState([]);
   const { setResult } = useResult();
   const { initState, loadingState, loading } = useLoading();
-
   useEffect(() => {
     initState();
+    loadingState();
+
+    let processing = reports;
+
     if (!(reports && userId)) {
-      loadingState();
-    } else if (reports && userId === "1") {
-      let processing = reports;
-      getUsersFunction().then((data) => {
-        for (let i = 0; i < data.length; i++) {
-          const matchId = data[i].id;
-          const matchName = data[i].name;
-          processing = processing.map((p) =>
-            p.userId === matchId ? { ...p, name: matchName } : p
-          );
-        }
-        if (input) {
-          processing = processing.filter((fr) => fr.company === input);
-        }
-        setFilterd(processing);
-        initState();
-      });
-    } else {
-      let processing = reports.filter((report) => report.userId === userId);
+      processing = [];
+    } else if (userId !== "1") {
+      processing = reports.filter((report) => report.userId === userId);
       if (input && input !== "전부") {
         processing = processing.filter(
           (fr) => getYearFromDateStr(fr.createdAt) === input
         );
       }
-      setFilterd(processing);
-      initState();
+    } else {
+      for (let i = 0; i < users.length; i++) {
+        const matchId = users[i].id;
+        const matchName = users[i].name;
+        processing = processing.map((p) =>
+          p.userId === matchId ? { ...p, name: matchName } : p
+        );
+      }
+      if (input) {
+        processing = processing.filter((fr) => fr.company === input);
+      }
     }
-  }, [reports, userId, initState, loadingState, input]);
+    setFilterd(processing);
+    initState();
+    //
+    // if (!(reports && userId)) {
+    //   initState();
+    // } else if (reports && userId === "1") {
+    //   getUsersFunction();
+    // } else {
+    //   let processing = reports.filter((report) => report.userId === userId);
+    //   if (input && input !== "전부") {
+    //     processing = processing.filter(
+    //       (fr) => getYearFromDateStr(fr.createdAt) === input
+    //     );
+    //   }
+    //   setFilterd(processing);
+    //   initState();
+    // }
+  }, [reports, initState, loadingState, userId, input, users]);
 
   const onClick = (id) => {
     const loginResult = filterd.find((filter) => filter.id === id);
@@ -67,7 +80,6 @@ export default function EachFilterd({
       })
       .catch(() => alert("삭제실패. 관리자에게 문의해주세요."));
   };
-
   if (loading)
     return <div className={styles.container}>데이터를 불러오는 중입니다..</div>;
   return (
@@ -130,13 +142,4 @@ function getYearFromDateStr(dateString) {
   const date = dateString.split("-");
   const year = date[0];
   return year;
-}
-
-async function getUsersFunction() {
-  try {
-    const response = await usersAPI.getAllUsers();
-    return response.data;
-  } catch (e) {
-    console.error(e);
-  }
 }

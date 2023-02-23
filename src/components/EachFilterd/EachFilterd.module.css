@@ -1,5 +1,5 @@
 .container {
-  height: 90%;
+  height: 82%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -8,7 +8,7 @@
   overflow: scroll;
 }
 .lists {
-  width: 90%;
+  width: 95%;
   margin-top: -0.5rem;
   overflow-y: scroll;
   font-size: 0.8rem;
@@ -90,4 +90,23 @@
 }
 .button:hover {
   transform: rotate(5deg) scale(120%);
+}
+/* flex = grow, shrink, basis */
+@media screen and (max-width: 410px) {
+  .listdiv {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .title {
+    flex: 5 0 7.5rem;
+  }
+  .secondtitle {
+    flex: 1 0 5rem;
+  }
+  .subtitle {
+    flex: 1 0 5rem;
+  }
+  .list:first-child {
+    display: none;
+  }
 }

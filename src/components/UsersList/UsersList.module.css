@@ -1,5 +1,5 @@
 .container {
-  height: 90%;
+  height: 82%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -91,4 +91,31 @@
 }
 .button:hover {
   transform: rotate(5deg) scale(120%);
+}
+
+@media screen and (max-width: 410px) {
+  .list:first-child {
+    display: none;
+  }
+  .list {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .listdiv {
+    display: flex;
+    flex-wrap: wrap;
+    flex: 9;
+  }
+  .btndiv {
+    flex: 1;
+  }
+  .title {
+    flex: 3 0 8rem;
+  }
+  .secondtitle {
+    flex: 1 0 4rem;
+  }
+  .subtitle {
+    flex: 1 0 3rem;
+  }
 }

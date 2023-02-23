@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useResult } from "../../context/ResultContext";
 import { transValue } from "../EachReport/EachReport";
 import styles from "./EachFilterd.module.css";
-import { useLoading } from "../../context/loadingContext";
 import { RiDeleteBinLine } from "react-icons/ri";
 import * as reportsAPI from "../../api/reports.js";
 
-export default function EachFilterd({
+export default React.memo(function EachFilterd({
   setReports,
   reports,
   userId,
@@ -16,11 +15,22 @@ export default function EachFilterd({
 }) {
   const [filterd, setFilterd] = useState([]);
   const { setResult } = useResult();
-  const { initState, loadingState, loading } = useLoading();
-  useEffect(() => {
-    initState();
-    loadingState();
 
+  // METHOD
+  const parseDatetoStr = useCallback((dateString) => {
+    const date = dateString.split("-");
+    const year = date[0];
+    const month = date[1];
+    const day = date[2].slice(0, 2);
+    return `${year}년 ${month}월 ${day}일`;
+  }, []);
+  const getYearFromDateStr = useCallback((dateString) => {
+    const date = dateString.split("-");
+    const year = date[0];
+    return year;
+  }, []);
+  // METHOD END
+  useEffect(() => {
     let processing = reports;
 
     if (!(reports && userId)) {
@@ -45,42 +55,32 @@ export default function EachFilterd({
       }
     }
     setFilterd(processing);
-    initState();
-    //
-    // if (!(reports && userId)) {
-    //   initState();
-    // } else if (reports && userId === "1") {
-    //   getUsersFunction();
-    // } else {
-    //   let processing = reports.filter((report) => report.userId === userId);
-    //   if (input && input !== "전부") {
-    //     processing = processing.filter(
-    //       (fr) => getYearFromDateStr(fr.createdAt) === input
-    //     );
-    //   }
-    //   setFilterd(processing);
-    //   initState();
-    // }
-  }, [reports, initState, loadingState, userId, input, users]);
+  }, [reports, userId, input, users, getYearFromDateStr]);
 
-  const onClick = (id) => {
-    const loginResult = filterd.find((filter) => filter.id === id);
-    setResult(loginResult);
-    setShowEachReport(true);
-  };
-  const onDelClick = (id) => {
-    const isDelete = window.confirm("정말로 삭제하시겠습니까?");
-    if (!isDelete) return;
-    reportsAPI
-      .removeReport(id)
-      .then(async () => {
-        const response = await reportsAPI.getAllReports();
-        setReports(response.data.data);
-        alert("삭제하였습니다.");
-      })
-      .catch(() => alert("삭제실패. 관리자에게 문의해주세요."));
-  };
-  if (loading)
+  const onClick = useCallback(
+    (id) => {
+      const loginResult = filterd.find((filter) => filter.id === id);
+      setResult(loginResult);
+      setShowEachReport(true);
+    },
+    [filterd, setResult, setShowEachReport]
+  );
+  const onDelClick = useCallback(
+    (id) => {
+      const isDelete = window.confirm("정말로 삭제하시겠습니까?");
+      if (!isDelete) return;
+      reportsAPI
+        .removeReport(id)
+        .then(async () => {
+          const response = await reportsAPI.getAllReports();
+          setReports(response.data.data);
+          alert("삭제하였습니다.");
+        })
+        .catch(() => alert("삭제실패. 관리자에게 문의해주세요."));
+    },
+    [setReports]
+  );
+  if (filterd.length === 0)
     return <div className={styles.container}>데이터를 불러오는 중입니다..</div>;
   return (
     <ul className={styles.lists}>
@@ -129,17 +129,4 @@ export default function EachFilterd({
       ))}
     </ul>
   );
-}
-
-function parseDatetoStr(dateString) {
-  const date = dateString.split("-");
-  const year = date[0];
-  const month = date[1];
-  const day = date[2].slice(0, 2);
-  return `${year}년 ${month}월 ${day}일`;
-}
-function getYearFromDateStr(dateString) {
-  const date = dateString.split("-");
-  const year = date[0];
-  return year;
-}
+});

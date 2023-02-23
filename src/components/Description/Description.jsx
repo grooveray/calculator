@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./Description.module.css";
 
-export default function Description() {
+export default React.memo(function Description() {
   return (
     <div className={styles.container}>
       <p>로그인을 하면,</p>
@@ -13,4 +13,4 @@ export default function Description() {
       </p>
     </div>
   );
-}
+});

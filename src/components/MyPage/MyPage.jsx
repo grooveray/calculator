@@ -5,7 +5,7 @@ import EachInfo from "../EachInfo/EachInfo.jsx";
 import styles from "./MyPage.module.css";
 import { GrUpdate } from "react-icons/gr";
 
-export default function MyPage({ isUser, isSuperAdmin }) {
+export default React.memo(function MyPage({ isUser, isSuperAdmin }) {
   const [user, setUser] = useState();
 
   useEffect(() => {
@@ -36,4 +36,4 @@ export default function MyPage({ isUser, isSuperAdmin }) {
       <EachInfo user={user} isSuperAdmin={isSuperAdmin} />
     </section>
   );
-}
+});

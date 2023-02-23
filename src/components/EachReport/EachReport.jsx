@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./EachReport.module.css";
 
-export default function EachReport({ result, setShowEachReport }) {
+export default React.memo(function EachReport({ result, setShowEachReport }) {
   const results = [
     { title: "사육일수", value: transValue(result.day, 1) },
     { title: "입추수수", value: transValue(result.inCount, 0) },
@@ -36,7 +36,7 @@ export default function EachReport({ result, setShowEachReport }) {
       ))}
     </ul>
   );
-}
+});
 
 export function transValue(value, floatNumber) {
   return parseFloat(value.toFixed(floatNumber)).toLocaleString("ko-KR");

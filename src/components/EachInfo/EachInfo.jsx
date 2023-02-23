@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import styles from "./EachInfo.module.css";
 import { GrUpdate } from "react-icons/gr";
 import { AiFillLock } from "react-icons/ai";
 import { updateUser } from "../../api/users";
 
-export default function EachInfo({ user, isSuperAdmin }) {
+export default React.memo(function EachInfo({ user, isSuperAdmin }) {
   const [users, setUsers] = useState([]);
   useEffect(() => {
     const { id, name, email, local, phone, admin } = user;
@@ -21,20 +21,24 @@ export default function EachInfo({ user, isSuperAdmin }) {
       return setUsers(lists.filter((list) => list.value !== admin));
     }
   }, [user, isSuperAdmin]);
-  const onClick = async (userId, name, value) => {
-    const newValue = prompt(`수정할 ${name}을 입력해주세요.`, value);
-    //validation
-    const response = await updateUser(userId, name, newValue);
-    if (!response) return alert("문제가 발생했습니다. 관리자에게 문의하세요.");
-    setUsers(
-      users.map((user) =>
-        user.name === name ? { ...user, value: newValue } : user
-      )
-    );
-    return alert("정보가 성공적으로 수정되었습니다.");
-    //response.data.updated 가 유저정보임
-  };
-  const onBtnClick = async (userId) => {
+  const onClick = useCallback(
+    async (userId, name, value) => {
+      const newValue = prompt(`수정할 ${name}을 입력해주세요.`, value);
+      //validation
+      const response = await updateUser(userId, name, newValue);
+      if (!response)
+        return alert("문제가 발생했습니다. 관리자에게 문의하세요.");
+      setUsers(
+        users.map((user) =>
+          user.name === name ? { ...user, value: newValue } : user
+        )
+      );
+      return alert("정보가 성공적으로 수정되었습니다.");
+      //response.data.updated 가 유저정보임
+    },
+    [users]
+  );
+  const onBtnClick = useCallback(async (userId) => {
     const password = prompt("기존의 비밀번호를 입력해주세요.", "");
     const newValue = prompt(`수정할 비밀번호를 입력해주세요.`, "");
     const confirm = prompt(`수정할 비밀번호를 한번더 입력해주세요.`, "");
@@ -44,7 +48,7 @@ export default function EachInfo({ user, isSuperAdmin }) {
     if (!response) return alert("기존의 비밀번호를 다시 한번 확인해주세요.");
     return alert("정보가 성공적으로 수정되었습니다.");
     //response.data.updated 가 유저정보임
-  };
+  }, []);
   return (
     <ul className={styles.lists}>
       {users.map((user, index) => (
@@ -70,4 +74,4 @@ export default function EachInfo({ user, isSuperAdmin }) {
       </li>
     </ul>
   );
-}
+});

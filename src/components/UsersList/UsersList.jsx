@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import styles from "./UsersList.module.css";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { SiDatabricks } from "react-icons/si";
@@ -6,7 +6,7 @@ import EachReport from "../EachReport/EachReport";
 import EachFilterd from "../EachFilterd/EachFilterd";
 import { useResult } from "../../context/ResultContext";
 
-export default function UsersList({
+export default React.memo(function UsersList({
   reports,
   users,
   onClick,
@@ -18,6 +18,29 @@ export default function UsersList({
 }) {
   const [adminReports, setAdminReports] = useState([]);
   const [adminUserId, setAdminUserId] = useState("");
+
+  // METHOD
+  const parseDatetoStr = useCallback((dateString) => {
+    const date = dateString.split("-");
+    const year = date[0];
+    const month = date[1];
+    const day = date[2].slice(0, 2);
+    return `${year}년 ${month}월 ${day}일`;
+  }, []);
+  const filterdArray = useCallback((users, reports) => {
+    let newUsers = users.map((user) => ({ ...user, data: [] }));
+    for (let i = 0; i < reports.length; i++) {
+      const userId = reports[i].userId;
+      newUsers = newUsers.map((user) =>
+        user.id === userId
+          ? { ...user, data: [...user.data, reports[i]] }
+          : user
+      );
+    }
+    return newUsers;
+  }, []);
+  //METHOD END
+
   const { result } = useResult();
   const filterd = filterdArray(users, reports);
   const onDataClick = (userId, filterdData) => {
@@ -72,22 +95,4 @@ export default function UsersList({
       ))}
     </ul>
   );
-}
-
-function parseDatetoStr(dateString) {
-  const date = dateString.split("-");
-  const year = date[0];
-  const month = date[1];
-  const day = date[2].slice(0, 2);
-  return `${year}년 ${month}월 ${day}일`;
-}
-function filterdArray(users, reports) {
-  let newUsers = users.map((user) => ({ ...user, data: [] }));
-  for (let i = 0; i < reports.length; i++) {
-    const userId = reports[i].userId;
-    newUsers = newUsers.map((user) =>
-      user.id === userId ? { ...user, data: [...user.data, reports[i]] } : user
-    );
-  }
-  return newUsers;
-}
+});

@@ -4,7 +4,7 @@ import { ResultContext } from "../../context/ResultContext";
 import EachReport from "../EachReport/EachReport";
 import styles from "./Result.module.css";
 
-export default function Result() {
+export default React.memo(function Result() {
   const [dataLen, setDataLen] = useState(0);
   useEffect(() => {
     getAllReports()
@@ -24,4 +24,4 @@ export default function Result() {
       <EachReport result={result} />
     </section>
   );
-}
+});

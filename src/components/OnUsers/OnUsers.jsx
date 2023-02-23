@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import styles from "./OnUsers.module.css";
 import * as usersAPI from "../../api/users.js";
 import * as reportsAPI from "../../api/reports.js";
@@ -9,15 +9,34 @@ import MyPage from "../MyPage/MyPage";
 // import { useNavigate } from "react-router-dom";
 import { getUserInfo } from "../../api/userInfo";
 
-export default function OnUsers({ setMainList }) {
+export default React.memo(function OnUsers({ setMainList }) {
   const [users, setUsers] = useState([]);
   const [reports, setReports] = useState([]);
   const [user, setUser] = useState({});
   const [showEachUser, setShowEachUser] = useState(false);
   const [showFilterReports, setShowFilterReports] = useState(false);
   const [showEachReport, setShowEachReport] = useState(false);
-  // const navigate = useNavigate();
-  // const { result } = useResult();
+
+  // METHOD
+
+  const getUsersFunction = useCallback(async () => {
+    try {
+      const response = await usersAPI.getAllUsers();
+      return response.data;
+    } catch (e) {
+      console.error(e);
+    }
+  }, []);
+  const getReportsFunction = useCallback(async () => {
+    try {
+      const response = await reportsAPI.getAllReports();
+      return response.data.data;
+    } catch (e) {
+      console.error(e);
+    }
+  }, []);
+
+  // METHOD END
 
   useEffect(() => {
     getReportsFunction()
@@ -26,18 +45,22 @@ export default function OnUsers({ setMainList }) {
     getUsersFunction()
       .then((data) => setUsers(data))
       .catch(console.error);
-  }, []);
-  const onClick = (userId) => {
-    const foundUser = users.find((user) => user.id === userId);
-    setUser(foundUser);
-    setShowEachUser(true);
-  };
-  const onBackClick = () => setShowEachUser(false);
-  const onDelClick = () => alert("유저삭제는 안 할 거지롱~");
-  const onInitClick = () => {
+  }, [getReportsFunction, getUsersFunction]);
+
+  const onClick = useCallback(
+    (userId) => {
+      const foundUser = users.find((user) => user.id === userId);
+      setUser(foundUser);
+      setShowEachUser(true);
+    },
+    [users]
+  );
+  const onBackClick = useCallback(() => setShowEachUser(false), []);
+  const onDelClick = useCallback(() => alert("유저삭제는 안 할 거지롱~"), []);
+  const onInitClick = useCallback(() => {
     setShowFilterReports(false);
     setShowEachReport(false);
-  };
+  }, []);
   return (
     <section className={styles.container}>
       {showEachUser ? (
@@ -81,21 +104,4 @@ export default function OnUsers({ setMainList }) {
       )}
     </section>
   );
-}
-
-async function getUsersFunction() {
-  try {
-    const response = await usersAPI.getAllUsers();
-    return response.data;
-  } catch (e) {
-    console.error(e);
-  }
-}
-async function getReportsFunction() {
-  try {
-    const response = await reportsAPI.getAllReports();
-    return response.data.data;
-  } catch (e) {
-    console.error(e);
-  }
-}
+});

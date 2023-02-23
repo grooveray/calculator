@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { BiLogOut } from "react-icons/bi";
 import { clearToken, getToken } from "../../api/token";
 import { clearUserInfo, getUserInfo } from "../../api/userInfo";
@@ -6,7 +6,7 @@ import { initialUserState, useUser } from "../../context/UserContext";
 import styles from "./Header.module.css";
 import { useLoading } from "../../context/loadingContext";
 
-export default function Header({
+export default React.memo(function Header({
   mainLists,
   mainList,
   setMainList,
@@ -23,61 +23,74 @@ export default function Header({
   const { setUser } = useUser();
   const token = getToken();
   const userInfo = getUserInfo();
-  const onClick = (list) => {
-    setMainList(list);
-    switch (list) {
-      case "계산기":
-        setShowResult(false);
-        onCalcPage();
-        break;
-      case "로그인":
-        onLoginPage();
-        break;
-      case "내성적보기":
-        myReportsPage();
-        break;
-      case "사료별효율":
-        myFeedsPage();
-        break;
-      case "내정보":
-        myPage();
-        break;
-      case "데이터조회":
-        onDatas();
-        break;
-      case "유저정보":
-        onUsers();
-        break;
-      default:
-        setShowResult(false);
-        onCalcPage();
-        break;
-    }
-    // if (list === "계산기") {
-    //   setShowResult(false);
-    //   onCalcPage();
-    // }
-    // if (list === "로그인") onLoginPage();
-  };
-  const onLogout = () => {
+  const onClick = useCallback(
+    (list) => {
+      setMainList(list);
+      switch (list) {
+        case "계산기":
+          setShowResult(false);
+          onCalcPage();
+          break;
+        case "로그인":
+          onLoginPage();
+          break;
+        case "내성적보기":
+          myReportsPage();
+          break;
+        case "사료별효율":
+          myFeedsPage();
+          break;
+        case "내정보":
+          myPage();
+          break;
+        case "데이터조회":
+          onDatas();
+          break;
+        case "유저정보":
+          onUsers();
+          break;
+        default:
+          setShowResult(false);
+          onCalcPage();
+          break;
+      }
+    },
+    [
+      myFeedsPage,
+      myPage,
+      myReportsPage,
+      onCalcPage,
+      onDatas,
+      onLoginPage,
+      onUsers,
+      setMainList,
+      setShowResult,
+    ]
+  );
+  const onLogout = useCallback(() => {
     clearToken();
     clearUserInfo();
     setUser(initialUserState);
     initState();
     onCalcPage();
     window.location.reload();
-  };
-  const filterdList = (mainLists) => {
-    if (token) {
-      if (getUserInfo().admin === "0") {
-        return mainLists.filter((list) => list !== "로그인");
+  }, [initState, onCalcPage, setUser]);
+  const filterdList = useCallback(
+    (mainLists) => {
+      if (token) {
+        if (getUserInfo().admin === "0") {
+          return mainLists.filter((list) => list !== "로그인");
+        } else {
+          return ["사료별효율", "데이터조회", "유저정보"];
+        }
       } else {
-        return ["사료별효율", "데이터조회", "유저정보"];
+        return mainLists.filter(
+          (list) => list === "계산기" || list === "로그인"
+        );
       }
-    } else {
-      return mainLists.filter((list) => list === "계산기" || list === "로그인");
-    }
-  };
+    },
+    [token]
+  );
   return (
     <header className={styles.container}>
       <ul className={styles.lists}>
@@ -109,4 +122,4 @@ export default function Header({
       )}
     </header>
   );
-}
+});

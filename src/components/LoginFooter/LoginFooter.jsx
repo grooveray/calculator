@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./LoginFooter.module.css";
 
-export default function LoginFooter() {
+export default React.memo(function LoginFooter() {
   let navigate = useNavigate();
 
   return (
@@ -16,4 +16,4 @@ export default function LoginFooter() {
       </p>
     </div>
   );
-}
+});

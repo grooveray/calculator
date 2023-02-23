@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./LoginForm.module.css";
 
-export default function LoginForm({ inputs, onChange, onSubmit }) {
+export default React.memo(function LoginForm({ inputs, onChange, onSubmit }) {
   const { email, password } = inputs;
   return (
     <form onSubmit={onSubmit} className={styles.form}>
@@ -38,4 +38,4 @@ export default function LoginForm({ inputs, onChange, onSubmit }) {
       </div>
     </form>
   );
-}
+});

@@ -27,7 +27,6 @@ export function LoadingProvider({ children }) {
       value={{
         loading,
         error,
-        setLoading,
         initState,
         loadingState,
         errorState,

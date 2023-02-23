@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useCallback, useContext, useState } from "react";
 import { createReport } from "../../api/reports";
 import { getUserInfo } from "../../api/userInfo";
 import { ResultContext } from "../../context/ResultContext";
@@ -40,41 +40,68 @@ export const companyLists = [
   "기타",
 ];
 
-export default function Form({ setShowResult }) {
+export default React.memo(function Form({ setShowResult }) {
   const [inputs, setInputs] = useState(initialState);
   const { setResult } = useContext(ResultContext);
-  const onChange = (e) => {
-    const { name, value } = e.target;
-    setInputs({ ...inputs, [name]: value ? parseFloat(value) : "" });
-  };
-  const onSelect = (e) => {
-    const { value } = e.target;
-    setInputs({ ...inputs, company: value });
-  };
-  const onSubmit = async (e) => {
-    e.preventDefault();
-    if (!inputs) return alert("모든 칸은 필수 입력사항입니다.");
-    for (let i = 0; i < labels.length; i++) {
-      if (!inputs[labels[i].name])
-        return alert(labels[i].text + "(은)는 필수 입력사항입니다.");
-    }
-    if (!inputs.company) return alert("사료회사명 선택은 필수사항입니다.");
-    if (
-      inputs.feedAmount / inputs.totalWeight < 1 ||
-      inputs.feedAmount / inputs.totalWeight > 2
-    )
-      return alert(
-        `효율계산값: ${(inputs.feedAmount / inputs.totalWeight).toFixed(
-          3
-        )}은 나올수 없습니다. 입력값을 확인해주세요.`
-      );
 
-    const created = { ...inputs, userId: await getUserId() };
-    const response = await createReport(created);
-    if (!response) return alert("Data not Found");
-    setResult(response.data.data);
-    setShowResult(true);
-  };
+  // METHOD
+  const getUserId = useCallback(async () => {
+    const token = getToken();
+    if (!token) return "";
+    const userInfo = getUserInfo();
+    if (!userInfo) {
+      return "";
+    } else {
+      const response = await userAPI.getAllUsers();
+      if (!response) return "";
+      const found = response.data.find((user) => user.email === userInfo.email);
+      if (!found) return "";
+      return found.id;
+    }
+  }, []);
+  //METHOD END
+
+  const onChange = useCallback(
+    (e) => {
+      const { name, value } = e.target;
+      setInputs({ ...inputs, [name]: value ? parseFloat(value) : "" });
+    },
+    [inputs]
+  );
+  const onSelect = useCallback(
+    (e) => {
+      const { value } = e.target;
+      setInputs({ ...inputs, company: value });
+    },
+    [inputs]
+  );
+  const onSubmit = useCallback(
+    async (e) => {
+      e.preventDefault();
+      if (!inputs) return alert("모든 칸은 필수 입력사항입니다.");
+      for (let i = 0; i < labels.length; i++) {
+        if (!inputs[labels[i].name])
+          return alert(labels[i].text + "(은)는 필수 입력사항입니다.");
+      }
+      if (!inputs.company) return alert("사료회사명 선택은 필수사항입니다.");
+      if (
+        inputs.feedAmount / inputs.totalWeight < 1 ||
+        inputs.feedAmount / inputs.totalWeight > 2
+      )
+        return alert(
+          `효율계산값: ${(inputs.feedAmount / inputs.totalWeight).toFixed(
+            3
+          )}은 나올수 없습니다. 입력값을 확인해주세요.`
+        );
+
+      const created = { ...inputs, userId: await getUserId() };
+      const response = await createReport(created);
+      if (!response) return alert("Data not Found");
+      setResult(response.data.data);
+      setShowResult(true);
+    },
+    [inputs, setResult, setShowResult, getUserId]
+  );
   return (
     <form className={styles.form} onSubmit={onSubmit}>
       <Select onSelect={onSelect} lists={companyLists} />
@@ -89,19 +116,4 @@ export default function Form({ setShowResult }) {
       <button className={styles.button}>계산하기</button>
     </form>
   );
-}
-
-async function getUserId() {
-  const token = getToken();
-  if (!token) return "";
-  const userInfo = getUserInfo();
-  if (!userInfo) {
-    return "";
-  } else {
-    const response = await userAPI.getAllUsers();
-    if (!response) return "";
-    const found = response.data.find((user) => user.email === userInfo.email);
-    if (!found) return "";
-    return found.id;
-  }
-}
+});

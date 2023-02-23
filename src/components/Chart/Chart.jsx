@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import {
   ResponsiveContainer,
   LineChart,
@@ -10,11 +10,11 @@ import {
   Legend,
 } from "recharts";
 
-export default function Chart({ chart }) {
-  const renderLegendText = (value, entry) => {
+export default React.memo(function Chart({ chart }) {
+  const renderLegendText = useCallback((value, entry) => {
     const { color } = entry;
     return <span style={{ color, fontSize: 10 }}>{value}</span>;
-  };
+  }, []);
 
   return (
     <ResponsiveContainer width="100%" height={300}>
@@ -126,4 +126,4 @@ export default function Chart({ chart }) {
       </LineChart>
     </ResponsiveContainer>
   );
-}
+});

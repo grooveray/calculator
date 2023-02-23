@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useCallback } from "react";
 import styles from "./Input.module.css";
 
-export default function Input({ label, onChange, inputs }) {
+export default React.memo(function Input({ label, onChange, inputs }) {
   const { id, text, name } = label;
-  function getSpanText(name) {
+  const getSpanText = useCallback((name) => {
     switch (name) {
       case "day":
         return " (일)";
@@ -18,7 +18,7 @@ export default function Input({ label, onChange, inputs }) {
       default:
         return "";
     }
-  }
+  }, []);
   return (
     <div className={styles.list}>
       <label className={styles.label} htmlFor={id}>
@@ -37,4 +37,4 @@ export default function Input({ label, onChange, inputs }) {
       />
     </div>
   );
-}
+});

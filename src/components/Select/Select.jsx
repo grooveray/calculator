@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./Select.module.css";
 
-export default function Select({ onSelect, lists, isDate }) {
+export default React.memo(function Select({ onSelect, lists, isDate }) {
   return (
     <div className={styles.container}>
       <select className={styles.select} name="company" onChange={onSelect}>
@@ -16,4 +16,4 @@ export default function Select({ onSelect, lists, isDate }) {
       </select>
     </div>
   );
-}
+});

@@ -43,7 +43,6 @@ export async function loginUser(email, password) {
       },
       { "Content-Type": "application/json" }
     );
-    console.log(response);
     saveToken(response.data.token);
     saveUserInfo(response);
     return response;

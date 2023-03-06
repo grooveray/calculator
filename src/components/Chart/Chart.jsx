@@ -37,7 +37,7 @@ export default React.memo(function Chart({ chart }) {
           domain={[1.25, 1.75]}
         />
         <Tooltip
-          position={{ x: 310, y: -50 }}
+          position={{ x: 100, y: -80 }}
           formatter={(val, name, props) => {
             const rename = name.split("[")[0];
             const len = props.payload[rename].count;

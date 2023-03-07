@@ -15,6 +15,7 @@ export default React.memo(function MyReports() {
   const [showEachReport, setShowEachReport] = useState(false);
   const { result } = useResult();
   const [input, setInput] = useState("");
+  const [mainLoading, setMainLoading] = useState(false);
 
   // METHOD
   const getYearLists = useCallback(() => {
@@ -34,6 +35,7 @@ export default React.memo(function MyReports() {
 
   useEffect(() => {
     async function getReports() {
+      setMainLoading(true);
       try {
         const response = await reportsAPI.getAllReports();
         setReports(response.data.data);
@@ -42,6 +44,7 @@ export default React.memo(function MyReports() {
           (user) => user.email === getUserInfo().email
         );
         setUserId(user.id);
+        setMainLoading(false);
       } catch (e) {
         console.error(e);
       }
@@ -83,6 +86,7 @@ export default React.memo(function MyReports() {
             userId={userId}
             setShowEachReport={setShowEachReport}
             input={input}
+            mainLoading={mainLoading}
           />
         </>
       )}

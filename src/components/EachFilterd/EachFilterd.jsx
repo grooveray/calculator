@@ -12,6 +12,7 @@ export default React.memo(function EachFilterd({
   setShowEachReport,
   input,
   users,
+  mainLoading,
 }) {
   const [filterd, setFilterd] = useState([]);
   const { setResult } = useResult();
@@ -80,8 +81,13 @@ export default React.memo(function EachFilterd({
     },
     [setReports]
   );
-  if (filterd.length === 0)
+
+  if (mainLoading)
     return <div className={styles.container}>데이터를 불러오는 중입니다..</div>;
+  if (filterd.length === 0)
+    return <div className={styles.container}>데이터가 없습니다.</div>;
+  // if (filterd.length === 0)
+  //   return <div className={styles.container}>데이터를 불러오는 중입니다..</div>;
   return (
     <ul className={styles.lists}>
       <li className={`${styles.list} ${styles.maintitle}`}>

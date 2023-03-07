@@ -16,14 +16,17 @@ export default React.memo(function OnDatas() {
   const { result } = useResult();
   const [input, setInput] = useState("");
   const [lists, setLists] = useState(companyLists);
+  const [mainLoading, setMainLoading] = useState(false);
 
   useEffect(() => {
     async function getReports() {
+      setMainLoading(true);
       try {
         const response = await reportsAPI.getAllReports();
         const response2 = await usersAPI.getAllUsers();
         setReports(response.data.data);
         setUsers(response2.data);
+        setMainLoading(false);
       } catch (e) {
         console.error(e);
       }
@@ -72,6 +75,7 @@ export default React.memo(function OnDatas() {
             setShowEachReport={setShowEachReport}
             input={input}
             users={users}
+            mainLoading={mainLoading}
           />
         </>
       )}

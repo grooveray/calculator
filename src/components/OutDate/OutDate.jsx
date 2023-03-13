@@ -4,7 +4,7 @@ import { transValue } from "../EachReport/EachReport";
 import Input from "../Input/Input";
 import Select from "../Select/Select";
 import styles from "./OutDate.module.css";
-
+//something
 const initialState = {
   startDay: "",
   feedEfficiency: 0,

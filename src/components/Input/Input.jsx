@@ -11,6 +11,8 @@ export default React.memo(function Input({ label, onChange, inputs }) {
         return " (수)";
       case "outCount":
         return " (수)";
+      case "nowCount":
+        return " (수)";
       case "totalWeight":
         return " (kg)";
       case "feedAmount":

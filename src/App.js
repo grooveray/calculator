@@ -10,10 +10,18 @@ import MyPage from "./components/MyPage/MyPage";
 import MyReports from "./components/MyReports/MyReports";
 import OnDatas from "./components/OnDatas/OnDatas";
 import OnUsers from "./components/OnUsers/OnUsers";
+import OutDate from "./components/OutDate/OutDate";
 import Result from "./components/Result/Result";
 import Signup from "./components/Signup/Signup";
 
-const mainLists = ["계산기", "로그인", "내성적보기", "사료별효율", "내정보"];
+const mainLists = [
+  "계산기",
+  "출하예측",
+  "로그인",
+  "내성적보기",
+  "사료별효율",
+  "내정보",
+];
 function App() {
   let navigate = useNavigate();
 
@@ -28,6 +36,7 @@ function App() {
   const myPage = () => navigate("/mypage");
   const onDatas = () => navigate("/ondatas");
   const onUsers = () => navigate("/onusers");
+  const guessOutDatePage = () => navigate("/outdate");
 
   return (
     <>
@@ -43,6 +52,7 @@ function App() {
         myPage={myPage}
         onDatas={onDatas}
         onUsers={onUsers}
+        guessOutDatePage={guessOutDatePage}
       />
       <Routes>
         <Route
@@ -66,6 +76,7 @@ function App() {
           path="/onusers"
           element={<OnUsers setMainList={setMainList} />}
         />
+        <Route path="/outdate" element={<OutDate />} />
       </Routes>
       <Footer />
     </>

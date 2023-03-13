@@ -31,3 +31,13 @@ export async function removeReport(id) {
     console.error(e);
   }
 }
+export async function getGuessData(data) {
+  try {
+    const response = await axios.post(`${base_URL}/calculate/guess`, data, {
+      "Content-Type": "application/json",
+    });
+    return response;
+  } catch (e) {
+    console.error(e);
+  }
+}

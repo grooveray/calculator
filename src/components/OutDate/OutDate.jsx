@@ -112,6 +112,10 @@ export default React.memo(function OutDate() {
             />
           ))}
           <button className={styles.button}>계산하기</button>
+          <div className={styles.alert}>
+            현재 테스트중인 서비스입니다. 맞지 않는 부분에 대하여 연락주시면
+            감사하겠습니다.
+          </div>
         </form>
       )}
     </>

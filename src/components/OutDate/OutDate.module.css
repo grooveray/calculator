@@ -83,6 +83,13 @@
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
 }
+.alert {
+  margin-top: 5px;
+  color: var(--color-accent-light);
+  background-color: var(--color-text);
+  padding: 10px;
+  border: 1px solid var(--color-grey);
+}
 /* flex = grow, shrink, basis */
 @media screen and (max-width: 410px) {
   .listdiv {

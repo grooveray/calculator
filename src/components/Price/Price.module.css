@@ -7,6 +7,7 @@
   align-items: center;
 }
 .title {
+  width: 90%;
   border: 1px solid var(--color-grey);
   border-radius: 1rem;
   padding: 0.2rem 1rem;
@@ -21,11 +22,11 @@
 
 table td {
   border-bottom: 1px dashed var(--color-grey);
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 0.5rem;
 }
 table th {
   border-bottom: 1px dashed var(--color-accent-light);
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 0.5rem;
   color: var(--color-accent);
 }
 table a:visited {
@@ -37,6 +38,7 @@ table a:visited {
     font-size: 0.8rem;
   }
   .title {
+    width: 100%;
     font-size: 0.6rem;
   }
   .table {

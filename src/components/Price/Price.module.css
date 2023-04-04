@@ -31,3 +31,30 @@ table th {
 table a:visited {
   color: var(--color-text);
 }
+
+@media screen and (max-width: 420px) {
+  .container {
+    font-size: 0.8rem;
+  }
+  .title {
+    font-size: 0.6rem;
+  }
+  .table {
+    width: 100%;
+  }
+
+  table td {
+    border-bottom: 1px dashed var(--color-grey);
+    padding: 0.5rem 0;
+  }
+
+  table th {
+    border-bottom: 1px dashed var(--color-accent-light);
+    color: var(--color-accent);
+    padding: 0.5rem 0;
+  }
+
+  table a:visited {
+    color: var(--color-text);
+  }
+}

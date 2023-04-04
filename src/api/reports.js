@@ -41,3 +41,11 @@ export async function getGuessData(data) {
     console.error(e);
   }
 }
+export async function getPriceData() {
+  try {
+    const response = await axios.get(`${base_URL}/calculate/price`);
+    return response;
+  } catch (e) {
+    console.error(e);
+  }
+}

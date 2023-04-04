@@ -11,12 +11,14 @@ import MyReports from "./components/MyReports/MyReports";
 import OnDatas from "./components/OnDatas/OnDatas";
 import OnUsers from "./components/OnUsers/OnUsers";
 import OutDate from "./components/OutDate/OutDate";
+import Price from "./components/Price/Price";
 import Result from "./components/Result/Result";
 import Signup from "./components/Signup/Signup";
 
 const mainLists = [
   "계산기",
-  "출하예측",
+  // "출하예측",
+  "육계시세",
   "로그인",
   "내성적보기",
   "사료별효율",
@@ -37,6 +39,7 @@ function App() {
   const onDatas = () => navigate("/ondatas");
   const onUsers = () => navigate("/onusers");
   const guessOutDatePage = () => navigate("/outdate");
+  const pricePage = () => navigate("/price");
 
   return (
     <>
@@ -53,6 +56,7 @@ function App() {
         onDatas={onDatas}
         onUsers={onUsers}
         guessOutDatePage={guessOutDatePage}
+        pricePage={pricePage}
       />
       <Routes>
         <Route
@@ -77,6 +81,7 @@ function App() {
           element={<OnUsers setMainList={setMainList} />}
         />
         <Route path="/outdate" element={<OutDate />} />
+        <Route path="/price" element={<Price />} />
       </Routes>
       <Footer />
     </>

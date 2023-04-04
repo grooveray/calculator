@@ -19,6 +19,7 @@ export default React.memo(function Header({
   onDatas,
   onUsers,
   guessOutDatePage,
+  pricePage,
 }) {
   const { initState } = useLoading();
   const { setUser } = useUser();
@@ -53,6 +54,9 @@ export default React.memo(function Header({
         case "출하예측":
           guessOutDatePage();
           break;
+        case "육계시세":
+          pricePage();
+          break;
         default:
           setShowResult(false);
           onCalcPage();
@@ -70,6 +74,7 @@ export default React.memo(function Header({
       setMainList,
       setShowResult,
       guessOutDatePage,
+      pricePage,
     ]
   );
   const onLogout = useCallback(() => {
@@ -85,7 +90,7 @@ export default React.memo(function Header({
       if (token) {
         if (getUserInfo().admin === "0") {
           return mainLists.filter(
-            (list) => list !== "로그인" && list !== "출하예측"
+            (list) => list !== "로그인" && list !== "육계시세"
           );
         } else {
           return ["사료별효율", "데이터조회", "유저정보"];
@@ -93,7 +98,7 @@ export default React.memo(function Header({
       } else {
         return mainLists.filter(
           (list) =>
-            list === "계산기" || list === "출하예측" || list === "로그인"
+            list === "계산기" || list === "육계시세" || list === "로그인"
         );
       }
     },
